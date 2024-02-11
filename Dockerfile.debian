@@ -1,0 +1,10 @@
+FROM debian:trixie-slim
+LABEL author=23skdu@users.noreply.github.com
+RUN set -x \
+    && apt update && apt upgrade -y && apt install -y build-essential \
+    libanyevent-perl libclass-refresh-perl libcompiler-lexer-perl \
+    libdata-dump-perl libio-aio-perl libjson-perl libmoose-perl \
+    libpadwalker-perl libscalar-list-utils-perl libcoro-perl \
+    && cpan install Perl::LanguageServer && rm -rf /root/.cpan && apt remove -y build-essential 
+COPY tool /
+CMD ["/usr/bin/perl","-e", "print 'works';"] 
